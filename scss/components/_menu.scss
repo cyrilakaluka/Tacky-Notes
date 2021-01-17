@@ -1,0 +1,153 @@
+[data-theme='dark'] {
+  --background-color: #333333;
+
+  // Note menu color palettes
+  --bg-color-palette-yellow: #e6b904;
+  --bg-color-palette-green: #61b256;
+  --bg-color-palette-pink: #ce76ab;
+  --bg-color-palette-purple: #b07fe0;
+  --bg-color-palette-blue: #59c0e7;
+  --bg-color-palette-grey: #989898;
+  --bg-color-palette-black: #444444;
+}
+
+[data-theme='light'] {
+  --background-color: #ffffff;
+
+  // Note menu color palettes
+  --bg-color-palette-yellow: #ffe66e;
+  --bg-color-palette-green: #a1ef9b;
+  --bg-color-palette-pink: #ffafdf;
+  --bg-color-palette-purple: #d7afff;
+  --bg-color-palette-blue: #9edfff;
+  --bg-color-palette-grey: #e0e0e0;
+  --bg-color-palette-black: #767676;
+}
+
+.menu {
+  --color-palette-check-mark: #333333;
+
+  position: absolute;
+  width: 100%;
+  height: 160px;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  background-color: var(--background-color);
+  color: var(--primary-font-color);
+  fill: var(--primary-font-color);
+  font-size: 0.85rem;
+  transform: translateY(-100%);
+  transition: transform 0.3s linear;
+
+  &.is-visible {
+    transform: translateY(0);
+    box-shadow: 1px 1px 3px 3px rgba(0, 0, 0, 0.1), -1px 0px 3px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  &__item {
+    flex: 1 1 0;
+    width: 100%;
+  }
+
+  &__item--themes {
+    display: flex;
+    align-items: center;
+
+    & > * {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    & input {
+      opacity: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+      position: relative;
+      z-index: 10;
+    }
+
+    & input:checked + label::before {
+      opacity: 1;
+    }
+
+    & input:hover + label:after {
+      background-color: var(--primary-theme-hover);
+    }
+
+    & label {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: grid;
+      place-content: center;
+    }
+
+    & > :nth-child(1) label {
+      background-color: var(--bg-color-palette-yellow);
+    }
+    & > :nth-child(2) label {
+      background-color: var(--bg-color-palette-green);
+    }
+    & > :nth-child(3) label {
+      background-color: var(--bg-color-palette-pink);
+    }
+    & > :nth-child(4) label {
+      background-color: var(--bg-color-palette-purple);
+    }
+    & > :nth-child(5) label {
+      background-color: var(--bg-color-palette-blue);
+    }
+    & > :nth-child(6) label {
+      background-color: var(--bg-color-palette-grey);
+    }
+    & > :nth-child(7) label {
+      --color-palette-check-mark: #f4f4f4;
+      --primary-theme-hover: rgba(255, 255, 255, 0.1);
+
+      background-color: var(--bg-color-palette-black);
+    }
+
+    & label::before {
+      content: '\2713';
+      font-size: 1rem;
+      color: var(--color-palette-check-mark);
+      opacity: 0;
+    }
+
+    & label::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 2;
+    }
+  }
+
+  &__item--notes-list,
+  &__item--delete {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 15px;
+    padding: 0px 15px;
+    cursor: default;
+
+    &:hover {
+      background-color: var(--primary-theme-hover);
+    }
+  }
+
+  &__item--delete {
+    color: var(--color-danger);
+    fill: var(--color-danger);
+  }
+}

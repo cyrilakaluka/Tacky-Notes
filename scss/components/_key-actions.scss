@@ -1,0 +1,39 @@
+[data-theme='dark'] {
+  --color: #333333;
+}
+
+[data-theme='light'] {
+  --color: #333333;
+}
+
+[data-theme-color='black'] {
+  --color: #f4f4f4;
+}
+
+.key-actions {
+  position: fixed;
+  right: 1.25rem;
+  top: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 10px;
+}
+
+.key-action {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: var(--box-shadow-button);
+  border-radius: 3px;
+  background-color: var(--primary-theme-color);
+  padding: 0.625rem;
+  transition: transform 0.2s linear;
+  color: var(--color);
+  fill: var(--color);
+}
+
+.key-action:hover {
+  transform: scale(1.1);
+}

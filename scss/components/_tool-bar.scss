@@ -1,0 +1,45 @@
+[data-theme='dark'] {
+  --color-fill: #f4f4f4;
+  --color-top-border: #474747;
+}
+
+[data-theme='light'] {
+  --color-fill: #333333;
+  --color-top-border: #dadada;
+
+  & [data-theme-color='black'] {
+    --color-top-border: #7a7a7a;
+  }
+}
+
+[data-theme-color='black'] {
+  --color-fill: #f4f4f4;
+}
+
+.tool-bar {
+  fill: var(--color-fill);
+  border-top: 1px solid var(--color-top-border);
+  opacity: 0;
+
+  & .wrapper {
+    padding: 5px;
+    max-width: 280px;
+  }
+
+  & .button {
+    padding: 8px;
+  }
+
+  & .button:hover {
+    background-color: var(--primary-theme-hover);
+  }
+
+  & .icon {
+    width: 20px;
+    height: 14px;
+  }
+}
+
+.note:focus-within .tool-bar {
+  opacity: 1;
+}

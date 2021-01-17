@@ -1,0 +1,20 @@
+.button {
+  cursor: pointer;
+  border: none;
+}
+
+.button:focus {
+  outline: none;
+}
+
+.button--icon {
+  background-color: transparent;
+  display: grid;
+  place-content: center;
+}
+
+.icon {
+  width: var(--width-button-icon);
+  height: var(--height-button-icon);
+  fill: inherit;
+}

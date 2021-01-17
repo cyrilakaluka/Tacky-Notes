@@ -1,0 +1,62 @@
+[data-theme='dark'] {
+  --color-text: #b9b9b9;
+  --color-border-divide: #8a8a8a;
+}
+
+[data-theme='light'] {
+  --color-text: #333333;
+  --color-border-divide: #636363;
+}
+
+.panel--settings {
+  display: grid;
+  gap: 10px;
+}
+
+.settings {
+  color: var(--color-text);
+  margin-top: 10px;
+  border-top: 0.5px solid var(--color-border-divide);
+
+  &__header {
+    font-size: 1.4rem;
+    margin: 10px 0;
+    font-weight: normal;
+  }
+
+  & .links {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    color: var(--color-info);
+
+    & > * {
+      color: inherit;
+    }
+  }
+
+  &--about {
+    padding-bottom: 30px;
+  }
+}
+
+.setting {
+  margin-bottom: 15px;
+  & .name {
+    margin-bottom: 5px;
+  }
+
+  &--theme {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    & .toggle label::after {
+      display: none;
+    }
+
+    & .toggle {
+      transform: translateX(100%);
+    }
+  }
+}

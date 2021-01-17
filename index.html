@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/main.css" />
+    <title>Notes App</title>
+  </head>
+  <body data-theme="dark">
+    <div id="app" class="app">
+      <div class="key-actions" data-theme-color="green">
+        <button id="action-new-note" class="button key-action">
+          <svg class="icon icon--add">
+            <use href="icons/sprite.svg#plus"></use>
+          </svg>
+          <span>Add Note</span>
+        </button>
+        <button id="action-notes-list" class="button key-action">
+          <svg class="icon icon--menu">
+            <use href="icons/sprite.svg#menu"></use>
+          </svg>
+          <span>Notes List</span>
+        </button>
+      </div>
+      <div class="note window" data-theme-color="black">
+        <div class="title-bar title-bar--note">
+          <button class="button button--icon">
+            <svg class="icon icon--plus">
+              <use href="icons/sprite.svg#plus"></use>
+            </svg>
+          </button>
+          <button class="button button--icon">
+            <svg class="icon icon--options">
+              <use href="icons/sprite.svg#options"></use>
+            </svg>
+          </button>
+          <button class="button button--icon">
+            <svg class="icon icon--close">
+              <use href="icons/sprite.svg#close"></use>
+            </svg>
+          </button>
+        </div>
+        <ul class="menu">
+          <li class="menu__item menu__item--themes">
+            <span>
+              <input checked type="radio" name="color-theme" />
+              <label></label>
+            </span>
+            <span>
+              <input type="radio" name="color-theme" />
+              <label></label>
+            </span>
+            <span>
+              <input type="radio" name="color-theme" />
+              <label></label>
+            </span>
+            <span>
+              <input type="radio" name="color-theme" />
+              <label></label>
+            </span>
+            <span>
+              <input type="radio" name="color-theme" />
+              <label></label>
+            </span>
+            <span>
+              <input type="radio" name="color-theme" />
+              <label></label>
+            </span>
+            <span>
+              <input type="radio" name="color-theme" />
+              <label></label>
+            </span>
+          </li>
+          <li class="menu__item menu__item--notes-list">
+            <svg class="icon icon--menu">
+              <use href="icons/sprite.svg#menu"></use>
+            </svg>
+            <span>Notes List</span>
+          </li>
+          <li class="menu__item menu__item--delete">
+            <svg class="icon icon--delete">
+              <use href="icons/sprite.svg#delete"></use>
+            </svg>
+            <span>Delete Note</span>
+          </li>
+        </ul>
+        <textarea class="panel text-area" placeholder="Take a note..."></textarea>
+        <div class="panel tool-bar">
+          <div class="wrapper flex justify-space-between">
+            <button class="button button--icon">
+              <svg class="icon icon--bold">
+                <use href="icons/sprite.svg#bold"></use>
+              </svg>
+            </button>
+            <button class="button button--icon">
+              <svg class="icon icon--italic">
+                <use href="icons/sprite.svg#italic"></use>
+              </svg>
+            </button>
+            <button class="button button--icon">
+              <svg class="icon icon--underline">
+                <use href="icons/sprite.svg#underline"></use>
+              </svg>
+            </button>
+            <button class="button button--icon">
+              <svg class="icon icon--strikethrough">
+                <use href="icons/sprite.svg#strikethrough"></use>
+              </svg>
+            </button>
+            <button class="button button--icon">
+              <svg class="icon icon--bullet-list">
+                <use href="icons/sprite.svg#bullet-list"></use>
+              </svg>
+            </button>
+            <button class="button button--icon">
+              <svg class="icon icon--image">
+                <use href="icons/sprite.svg#image"></use>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div id="notes-list" class="notes-list window" data-theme-color="green">
+        <div class="title-bar title-bar--main">
+          <button class="button button--icon">
+            <svg class="icon icon--plus">
+              <use href="icons/sprite.svg#plus"></use>
+            </svg>
+          </button>
+          <button class="button button--icon">
+            <svg class="icon icon--settings">
+              <use href="icons/sprite.svg#settings"></use>
+            </svg>
+          </button>
+          <button class="button button--icon">
+            <svg class="icon icon--close">
+              <use href="icons/sprite.svg#close"></use>
+            </svg>
+          </button>
+        </div>
+        <div class="title-bar title-bar--settings">
+          <button class="button button--icon">
+            <svg class="icon icon--left-arrow">
+              <use href="icons/sprite.svg#left-arrow"></use>
+            </svg>
+          </button>
+          <h2 class="title">Settings</h2>
+          <button class="button button--icon">
+            <svg class="icon icon--close">
+              <use href="icons/sprite.svg#close"></use>
+            </svg>
+          </button>
+        </div>
+        <div class="panel panel--main">
+          <h2 class="header-2">Tacky Notes</h2>
+          <div class="search-field">
+            <input id="search" type="text" placeholder="Search..." />
+            <div class="controls">
+              <button id="button-clear" class="button button--icon">
+                <svg class="icon icon--close">
+                  <use href="icons/sprite.svg#close"></use>
+                </svg>
+              </button>
+              <button id="button-search" class="button button--icon">
+                <svg class="icon icon--search">
+                  <use href="icons/sprite.svg#search"></use>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <ul class="thumbnails">
+            <li class="thumbnail">
+              <small class="time">7:15 PM</small>
+              <button class="button button--icon">
+                <svg class="icon icon--options">
+                  <use href="icons/sprite.svg#options"></use>
+                </svg>
+              </button>
+              <p class="overview">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi quidem numquam in minima tempora at,
+                dolorum aliquid! Accusamus, porro cumque rem aut harum quis ipsam fuga illo, aliquid saepe, alias dicta
+                maiores necessitatibus quae quibusdam pariatur reiciendis iusto nesciunt numquam eaque excepturi. Autem
+                minus natus soluta exercitationem iste. Fugit, dolore.
+              </p>
+            </li>
+            <li class="thumbnail">
+              <small class="time">7:15 PM</small>
+              <button class="button button--icon">
+                <svg class="icon icon--options">
+                  <use href="icons/sprite.svg#options"></use>
+                </svg>
+              </button>
+              <p class="overview">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi quidem numquam in minima tempora at,
+                dolorum aliquid! Accusamus, porro cumque rem aut harum quis ipsam fuga illo, aliquid saepe, alias dicta
+                maiores necessitatibus quae quibusdam pariatur reiciendis iusto nesciunt numquam eaque excepturi. Autem
+                minus natus soluta exercitationem iste. Fugit, dolore.
+              </p>
+            </li>
+          </ul>
+        </div>
+        <div class="panel panel--settings">
+          <div class="settings settings--general">
+            <h3 class="settings__header">General</h3>
+            <div class="setting">
+              <div class="name">Enable insights</div>
+              <div class="toggle">
+                <input type="checkbox" id="insights-toggle" />
+                <label for="insights-toggle"> </label>
+              </div>
+            </div>
+            <div class="setting">
+              <div class="name">Confirm before deleting</div>
+              <div class="toggle">
+                <input type="checkbox" id="confirm-delete-toggle" />
+                <label for="confirm-delete-toggle"> </label>
+              </div>
+            </div>
+          </div>
+          <div class="settings">
+            <h3 class="settings__header">Switch theme</h3>
+            <div class="setting setting--theme">
+              <div class="toggle">
+                <input type="checkbox" id="theme-toggle" />
+                <label for="theme-toggle"> </label>
+                <svg class="icon icon--lights">
+                  <use href="icons/sprite.svg#lights"></use>
+                </svg>
+                <svg class="icon icon--night-mode">
+                  <use href="icons/sprite.svg#night-mode"></use>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div class="settings settings--help">
+            <h3 class="settings__header">Help & feedback</h3>
+            <div class="links">
+              <a href="#">Help</a>
+              <a href="#">Share feedback</a>
+              <a href="#">Rate us</a>
+            </div>
+          </div>
+          <div class="settings settings--about">
+            <h3 class="settings__header">About</h3>
+            <small class="version-info">Tacky Notes rev 1.0.0</small><br />
+            <small class="copyrights">&copy; 2021 Marvis Claire Enterprise. All rights reserved.</small>
+            <div class="links">
+              <a href="#">Terms of use</a>
+              <a href="#">Privacy Policy</a>
+            </div>
+          </div>
+        </div>
+        <div class="scroll-reveal"></div>
+      </div>
+    </div>
+    <script src="js/main.js"></script>
+  </body>
+</html>

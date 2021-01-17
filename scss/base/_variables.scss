@@ -1,0 +1,87 @@
+:root {
+  // Default button icon width and height
+  --width-button-icon: 14px;
+  --height-button-icon: 14px;
+  // Box shadows
+  --box-shadow-button: 12px 2px 6px 3px rgba(0, 0, 0, 0.05), -1px -1px 6px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* Theme-based custom control variables */
+[data-theme='dark'] {
+  --primary-font-color: #f4f4f4;
+  --primary-theme-hover: rgba(255, 255, 255, 0.05);
+  --secondary-theme-color: #333333;
+  --color-danger: #ff3a3a;
+  --color-info: #35a0ca;
+}
+
+[data-theme='dark'] [data-theme-color='yellow'] {
+  --primary-theme-color: #e6b905;
+}
+
+[data-theme='dark'] [data-theme-color='green'] {
+  --primary-theme-color: #6fd262;
+}
+
+[data-theme='dark'] [data-theme-color='pink'] {
+  --primary-theme-color: #ea86c2;
+}
+
+[data-theme='dark'] [data-theme-color='purple'] {
+  --primary-theme-color: #c78eff;
+}
+
+[data-theme='dark'] [data-theme-color='blue'] {
+  --primary-theme-color: #5ac0e7;
+}
+
+[data-theme='dark'] [data-theme-color='grey'] {
+  --primary-theme-color: #aaaaaa;
+}
+
+[data-theme='dark'] [data-theme-color='black'] {
+  --primary-theme-color: #454545;
+  --color-font-thumbnail-time: #f4f4f4;
+}
+
+[data-theme='light'] {
+  --primary-font-color: #333333;
+  --primary-theme-hover: rgba(0, 0, 0, 0.05);
+  --color-danger: #e61e1e;
+  --color-info: #007cbf;
+}
+
+[data-theme='light'] [data-theme-color='yellow'] {
+  --primary-theme-color: #fff2ab;
+  --secondary-theme-color: #fff7d1;
+}
+
+[data-theme='light'] [data-theme-color='green'] {
+  --primary-theme-color: #cbf1c4;
+  --secondary-theme-color: #e4f9e0;
+}
+
+[data-theme='light'] [data-theme-color='pink'] {
+  --primary-theme-color: #ffcce5;
+  --secondary-theme-color: #ffe4f1;
+}
+
+[data-theme='light'] [data-theme-color='purple'] {
+  --primary-theme-color: #e7cfff;
+  --secondary-theme-color: #f2e6ff;
+}
+
+[data-theme='light'] [data-theme-color='blue'] {
+  --primary-theme-color: #cde9ff;
+  --secondary-theme-color: #e2f1ff;
+}
+
+[data-theme='light'] [data-theme-color='grey'] {
+  --primary-theme-color: #e1dfdd;
+  --secondary-theme-color: #f3f2f1;
+}
+
+[data-theme='light'] [data-theme-color='black'] {
+  --primary-theme-color: #494745;
+  --secondary-theme-color: #696969;
+}

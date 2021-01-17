@@ -1,0 +1,63 @@
+[data-theme='dark'] {
+  --color-text: #b5b5b5;
+  --color-text-focus: #f4f4f4;
+  --color-placeholder-text: #b5b5b5;
+  --color-placeholder-text-focus: #9b9b9b;
+  --bg-color-input: #404040;
+}
+
+[data-theme='light'] {
+  --color-text: #464646;
+  --color-text-focus: #333333;
+  --color-placeholder-text: #666666;
+  --color-placeholder-text-focus: #868686;
+  --bg-color-input: #eeeeee;
+}
+
+.search-field {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 1fr 72px;
+  width: 100%;
+  font-size: 0.8rem;
+  background-color: var(--bg-color-input);
+  fill: var(--color-placeholder-text);
+  margin-bottom: 10px;
+
+  & input {
+    width: 100%;
+    padding: 10px;
+    background-color: inherit;
+    color: var(--color-text);
+    border: none;
+
+    &::placeholder {
+      color: var(--color-placeholder-text);
+    }
+
+    &:focus {
+      outline: none;
+      color: var(--color-text-focus);
+    }
+
+    &:focus::placeholder {
+      color: var(--color-placeholder-text-focus);
+    }
+
+    &:placeholder-shown + .controls > :first-child {
+      visibility: hidden;
+    }
+  }
+
+  & .controls {
+    display: flex;
+
+    & > :hover {
+      background-color: rgba($color: #000000, $alpha: 0.1);
+    }
+  }
+
+  & .icon {
+    width: 36px;
+  }
+}
