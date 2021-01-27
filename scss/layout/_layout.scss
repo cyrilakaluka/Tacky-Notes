@@ -14,7 +14,7 @@
   --bg-scroll-track: #111111;
 }
 
-.app {
+.root {
   width: 100%;
   height: 100%;
   position: relative;
@@ -24,22 +24,32 @@
 .window {
   --box-shadow-window: 1px 1px 10px 5px rgba(0, 0, 0, 0.05), -1px -1px 10px 5px rgba(0, 0, 0, 0.05);
 
-  position: absolute;
+  position: fixed;
   display: flex;
   flex-direction: column;
   box-shadow: var(--box-shadow-window);
   overflow: hidden;
+  opacity: 0;
+  animation: window-is-concealed 0.5s ease-in-out 0s forwards;
+
+  // todo - window on focus
+  &:focus {
+  }
+
+  &.is-visible {
+    animation: window-is-visible 0.5s ease-in-out 0s forwards;
+  }
 
   &.note {
     // Note dimension specification
     --min-width: 120px;
     --max-width: 800px;
-    --preferred-width: 320px;
-    --preferred-height: 512px;
+    --preferred-width: 305px;
+    --preferred-height: 315px;
     --min-height: 70px;
     --max-height: 100vh;
 
-    display: none;
+    // display: none;
     top: 30px;
     left: 30px;
     background-color: var(--secondary-theme-color);
@@ -47,10 +57,10 @@
     height: var(--preferred-height);
   }
 
-  &.notes-list {
-    --min-width: 400px;
+  &.controls {
+    --min-width: 320px;
     --max-width: 600px;
-    --min-height: 600px;
+    --min-height: 500px;
     --width: 320px;
 
     // display: none;
@@ -90,7 +100,11 @@
   z-index: 1;
 
   &::-webkit-scrollbar {
-    width: 15px;
+    width: 0;
+  }
+
+  &:hover::-webkit-scrollbar {
+    width: 5px;
   }
 
   &::-webkit-scrollbar-track {
@@ -99,6 +113,7 @@
 
   &::-webkit-scrollbar-thumb {
     background-color: var(--bg-scroll-thumb);
+    border-radius: 10px;
   }
 
   &::-webkit-scrollbar-thumb:hover {

@@ -1,11 +1,13 @@
 @import 'abstracts/functions';
+@import 'abstracts/animations';
 
 @import 'base/reset';
 @import 'base/variables';
 @import 'base/base';
 
+@import 'components/tooltip';
 @import 'components/button';
-@import 'components/key-actions';
+@import 'components/side-controls';
 @import 'components/title-bar';
 @import 'components/menu';
 @import 'components/tool-bar';

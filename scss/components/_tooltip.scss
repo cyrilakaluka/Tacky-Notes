@@ -1,0 +1,17 @@
+#tooltip {
+  position: fixed;
+  z-index: -999999999;
+  pointer-events: none;
+  font-size: 0.7rem;
+  color: #fff;
+  background-color: #222222;
+  padding: 7px 8px;
+  box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.1);
+  transform: translate(-50%, -50%);
+  transform-origin: center;
+  opacity: 0;
+
+  &.is-visible {
+    animation: tooltip-entrance 0.1s linear 0.1s forwards;
+  }
+}

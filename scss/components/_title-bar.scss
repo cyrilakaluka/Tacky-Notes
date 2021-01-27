@@ -38,7 +38,7 @@
   fill: var(--color-icon);
 
   & > .button {
-    padding: 8px;
+    padding: 10px;
   }
 }
 
@@ -46,15 +46,16 @@
   margin-right: auto;
 }
 
-.note:focus-within > .title-bar {
+.note:focus-within > .title-bar,
+.note:focus > .title-bar {
   transform: translateY(0);
 }
 
-.notes-list > .title-bar--main > :first-child {
+.controls > .title-bar--main > :first-child {
   margin-right: auto;
 }
 
-.notes-list > .title-bar--settings > :last-child {
+.controls > .title-bar--settings > :last-child {
   margin-left: auto;
 }
 
