@@ -1,5 +1,5 @@
 import WindowView from './WindowView.js';
-import ViewDataStore from './ViewDataStore.js';
+import ViewDataCache from './ViewDataCache.js';
 import Event from '../EventDispatcher.js';
 import Helper from '../Helpers.js';
 
@@ -12,7 +12,7 @@ export default class NoteView extends WindowView {
     this.status = note.status;
     this.centered = note.centered;
     this.zIndex = +note.style['z-index'];
-    this.globalBroadcastEvent = ViewDataStore.globalBroadcastEvent;
+    this.globalBroadcastEvent = ViewDataCache.globalBroadcastEvent;
     this.addNoteEvent = new Event(this);
     this.deleteNoteEvent = new Event(this);
     this.closeNoteEvent = new Event(this);

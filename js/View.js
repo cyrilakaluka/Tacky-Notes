@@ -6,8 +6,8 @@
  *
  */
 import Event from './EventDispatcher.js';
-import ViewDataStore from './Views/ViewDataStore.js';
-import { ViewFactory } from './Views/ViewDataStore.js';
+import ViewDataCache from './Views/ViewDataCache.js';
+import { ViewFactory } from './Views/ViewDataCache.js';
 
 export default class View {
   constructor(data) {
@@ -16,7 +16,7 @@ export default class View {
   }
 
   _init() {
-    ViewDataStore.init(this.data);
+    ViewDataCache.init(this.data);
     return this._createEvents()._subscribeEvents();
   }
 
@@ -30,14 +30,14 @@ export default class View {
   }
 
   _subscribeEvents() {
-    ViewDataStore.noteViews.forEach(noteView => {
+    ViewDataCache.noteViews.forEach(noteView => {
       noteView.deleteNoteEvent.subscribe(this._handleDeleteNoteEvent);
       noteView.updateNoteEvent.subscribe(this._handleUpdateNoteEvent);
     });
-    ViewDataStore.controlsView.updateSettingsEvent.subscribe(this._handleUpdateAppSetting);
-    ViewDataStore.settingsView.updateSettingsEvent.subscribe(this._handleUpdateAppSetting);
-    ViewDataStore.rootView.addNoteEvent.subscribe(this._handleAddNoteEvent);
-    ViewDataStore.rootView.updateSettingsEvent.subscribe(this._handleUpdateAppSetting);
+    ViewDataCache.controlsView.updateSettingsEvent.subscribe(this._handleUpdateAppSetting);
+    ViewDataCache.settingsView.updateSettingsEvent.subscribe(this._handleUpdateAppSetting);
+    ViewDataCache.rootView.addNoteEvent.subscribe(this._handleAddNoteEvent);
+    ViewDataCache.rootView.updateSettingsEvent.subscribe(this._handleUpdateAppSetting);
     return this;
   }
 
@@ -60,9 +60,9 @@ export default class View {
   actionNoteCreated = data => {
     const noteView = ViewFactory.createView('note', data);
     const thumbnailView = ViewFactory.createView('thumbnail', noteView);
-    ViewDataStore.noteViews.push(noteView);
-    ViewDataStore.thumbnailViews.push(thumbnailView);
-    ViewDataStore.rootView.prepareNewNote(noteView);
-    ViewDataStore.notesListView.prepareNewThumbnail(thumbnailView);
+    ViewDataCache.noteViews.push(noteView);
+    ViewDataCache.thumbnailViews.push(thumbnailView);
+    ViewDataCache.rootView.prepareNewNote(noteView);
+    ViewDataCache.notesListView.prepareNewThumbnail(thumbnailView);
   };
 }

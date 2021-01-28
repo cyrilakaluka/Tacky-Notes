@@ -1,19 +1,17 @@
 import AbstractView from './AbstractView.js';
-import ViewDataStore from './ViewDataStore.js';
+import ViewDataCache from './ViewDataCache.js';
 import Event from '../EventDispatcher.js';
-import Popups from './PopupViews.js';
-const Tooltip = Popups.Tooltip;
 
 export default class RootView extends AbstractView {
   constructor() {
     super();
-    this.globalBroadcastEvent = ViewDataStore.globalBroadcastEvent;
+    this.globalBroadcastEvent = ViewDataCache.globalBroadcastEvent;
     this.globalBroadcastEvent.source = this;
-    this.controlsView = ViewDataStore.controlsView;
-    this.noteViews = ViewDataStore.noteViews;
-    this.sideControlsView = ViewDataStore.sideControlsView;
-    this.settings = ViewDataStore.appSettings;
-    this.toolTip = new Tooltip();
+    this.controlsView = ViewDataCache.controlsView;
+    this.noteViews = ViewDataCache.noteViews;
+    this.sideControlsView = ViewDataCache.sideControlsView;
+    this.settings = ViewDataCache.appSettings;
+    this.toolTip = ViewDataCache.tooltip;
     this.addNoteEvent = new Event(this);
     this.updateSettingsEvent = new Event(this);
     this.updateAllEvent = new Event(this);

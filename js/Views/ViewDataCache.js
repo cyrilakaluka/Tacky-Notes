@@ -8,12 +8,15 @@ import {
   ThumbnailView,
 } from './Index.js';
 import Event from '../EventDispatcher.js';
+import Popups from './PopupViews.js';
+const Tooltip = Popups.Tooltip;
 
-export default class ViewDataStore {
+export default class ViewDataCache {
   static init({ appSettings, notesList }) {
     this._appSettings = appSettings;
     this._notesList = notesList;
     this._globalBroadcastEvent = new Event();
+    this._tooltip = new Tooltip();
     this._noteViews = notesList.map(note => ViewFactory.createView('note', note));
     this._thumbnailViews = this._noteViews.map(noteView => ViewFactory.createView('thumbnail', noteView));
     this._settingsView = ViewFactory.createView('settings');
@@ -21,6 +24,10 @@ export default class ViewDataStore {
     this._controlsView = ViewFactory.createView('controls');
     this._sideControlsView = ViewFactory.createView('sideControls');
     this._rootView = ViewFactory.createView('root');
+  }
+
+  static get tooltip() {
+    return this._tooltip;
   }
 
   static get appSettings() {

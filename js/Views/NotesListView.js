@@ -1,12 +1,12 @@
 import AbstractView from './AbstractView.js';
-import ViewDataStore from './ViewDataStore.js';
+import ViewDataCache from './ViewDataCache.js';
 import Helper from '../Helpers.js';
 
 export default class NotesListView extends AbstractView {
   constructor() {
     super();
 
-    this.thumbnailList = ViewDataStore.thumbnailViews;
+    this.thumbnailList = ViewDataCache.thumbnailViews;
 
     super._init();
   }

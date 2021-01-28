@@ -1,12 +1,12 @@
 import AbstractView from './AbstractView.js';
-import ViewDataStore from './ViewDataStore.js';
+import ViewDataCache from './ViewDataCache.js';
 import Event from '../EventDispatcher.js';
 import Helper from '../Helpers.js';
 
 export default class SettingsView extends AbstractView {
   constructor() {
     super();
-    this.settings = ViewDataStore.appSettings;
+    this.settings = ViewDataCache.appSettings;
     this.updateSettingsEvent = new Event(this);
     super._init();
   }

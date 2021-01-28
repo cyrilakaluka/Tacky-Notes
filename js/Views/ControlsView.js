@@ -1,5 +1,5 @@
 import WindowView from './WindowView.js';
-import ViewDataStore from './ViewDataStore.js';
+import ViewDataCache from './ViewDataCache.js';
 import Event from '../EventDispatcher.js';
 import Helper from '../Helpers.js';
 
@@ -7,7 +7,7 @@ export default class ControlsView extends WindowView {
   constructor() {
     super();
     this.id = 0;
-    this.settings = ViewDataStore.appSettings;
+    this.settings = ViewDataCache.appSettings;
     this.style = this.settings.ctrlViewSettings.style;
     this.centered = this.settings.ctrlViewSettings.centered;
     this.status = this.settings.ctrlViewSettings.status;
@@ -15,9 +15,9 @@ export default class ControlsView extends WindowView {
     this.addNoteEvent = new Event(this);
     this.updateSettingsEvent = new Event(this);
     this.focusInEvent = new Event(this);
-    this.globalBroadcastEvent = ViewDataStore.globalBroadcastEvent;
-    this.settingsView = ViewDataStore.settingsView;
-    this.notesListView = ViewDataStore.notesListView;
+    this.globalBroadcastEvent = ViewDataCache.globalBroadcastEvent;
+    this.settingsView = ViewDataCache.settingsView;
+    this.notesListView = ViewDataCache.notesListView;
     super._init();
   }
 
