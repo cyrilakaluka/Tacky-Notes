@@ -28,11 +28,32 @@ const Helper = (function () {
     element.addEventListener(eventType, handler);
   };
 
+  const delay = time => {
+    let handle, handleArgs, timeoutId;
+
+    const handleSetter = {
+      then: (callback, ...args) => {
+        handle = callback;
+        handleArgs = args;
+        return timeoutId;
+      },
+    };
+
+    const handleCaller = () => {
+      if (handle) handle(...handleArgs);
+    };
+
+    timeoutId = setTimeout(handleCaller, time);
+
+    return handleSetter;
+  };
+
   return {
     htmlToElement,
     createElement,
     isEmptyObject,
     addSelfDestructingEventListener,
+    delay,
   };
 })();
 

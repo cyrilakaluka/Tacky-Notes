@@ -11,8 +11,7 @@ export default class Controller {
     this.view.addNoteEvent.subscribe(this._handleCreateNoteEvent);
     this.view.updateNoteEvent.subscribe(this._handleUpdateNoteEvent);
     this.view.deleteNoteEvent.subscribe(this._handleDeleteNoteEvent);
-    this.view.updateAppSettingsEvent.subscribe(this._handleUpdateAppSettingsEvent);
-    this.view.updateControlsViewSettingsEvent.subscribe(this._handleUpdateControlsViewSettingsEvent);
+    this.view.updateAppSettingsEvent.subscribe(this._handleUpdateAppSettings);
   }
 
   _handleCreatedNoteEvent = (sender, data) => {
@@ -40,10 +39,6 @@ export default class Controller {
   };
 
   _handleUpdateAppSettings = (sender, data) => {
-    this.model.updateAppSettingsEvent(data);
-  };
-
-  _handleUpdateControlsViewSettings = (sender, data) => {
-    this.model.updateControlsViewSettings(data);
+    this.model.updateAppSettings(data);
   };
 }

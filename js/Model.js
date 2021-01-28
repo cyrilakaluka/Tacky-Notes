@@ -72,10 +72,6 @@ export default class Model {
   updateAppSettings(settings) {
     this.settings = this.db.updateAppSettings(settings);
   }
-
-  updateControlsViewSettings(settings) {
-    this.settings = this.db.updateControlsViewSettings(settings);
-  }
 }
 
 export class NoteDataModel {
@@ -86,7 +82,7 @@ export class NoteDataModel {
     this.images = [...data.images];
     this.text = data.text;
     this.themeColor = data.themeColor;
-    this.center = data.center;
+    this.centered = data.centered;
     this.style = data.style;
     this.status = data.status;
     return this;
@@ -100,7 +96,6 @@ export class NoteDataModel {
       images: [],
       text: '',
       themeColor: 'green',
-      center: true,
       style: {
         width: '305px',
         height: '315px',
@@ -108,6 +103,7 @@ export class NoteDataModel {
         left: 0,
         'z-index': 1,
       },
+      centered: true,
       status: 'open',
     };
   }
@@ -130,6 +126,7 @@ export class AppSettingsDataModel {
     this.highestZIndex = data.highestZIndex;
     this.ctrlViewStyle = data.ctrlViewStyle;
     this.ctrlViewStatus = data.ctrlViewStatus;
+    this.ctrlViewSettings = data.ctrlViewSettings;
   }
 
   static get default() {
@@ -139,16 +136,19 @@ export class AppSettingsDataModel {
       themeMode: 'light',
       lastColorTheme: 'green',
       highestZIndex: 1,
-      ctrlViewStyle: {
-        width: '320px',
-        height: '500px',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        opacity: 0,
-        'z-index': 0,
+      ctrlViewSettings: {
+        style: {
+          width: '320px',
+          height: '500px',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          opacity: 0,
+          'z-index': 0,
+        },
+        centered: false,
+        status: 'closed',
       },
-      ctrlViewStatus: 'closed',
     };
   }
 }

@@ -36,9 +36,11 @@
   transition: 0.3s linear;
   background-color: var(--primary-theme-color);
   fill: var(--color-icon);
+  pointer-events: none;
 
   & > .button {
     padding: 10px;
+    pointer-events: none;
   }
 }
 
@@ -49,6 +51,12 @@
 .note:focus-within > .title-bar,
 .note:focus > .title-bar {
   transform: translateY(0);
+
+  pointer-events: auto;
+
+  & > .button {
+    pointer-events: auto;
+  }
 }
 
 .controls > .title-bar--main > :first-child {
