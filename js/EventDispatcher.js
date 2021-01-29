@@ -8,10 +8,20 @@ export default class Event {
     this._subscribers.push(subscriber);
   }
 
-  notify(args) {
-    if (this._subscribers.length === 0) return;
+  unsubscribe(subscriber) {
+    this._subscribers.filter(s => s !== subscriber);
+  }
 
+  notify(args) {
     this._subscribers.forEach(subscriber => subscriber.call(null, this._source, args));
+  }
+
+  broadcast(args, bypass) {
+    this._subscribers.forEach(subscriber => {
+      if (bypass !== subscriber) {
+        subscriber.call(null, this._source, args);
+      }
+    });
   }
 
   /**

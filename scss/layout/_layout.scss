@@ -4,6 +4,7 @@
   --bg-scroll-thumb: #9c9c9c;
   --bg-scroll-hover: #{darken(#9c9c9c, 10%)};
   --bg-scroll-track: #d8d8d8;
+  --window-border: 0.05px solid #808080;
 }
 
 [data-theme='dark'] {
@@ -12,6 +13,7 @@
   --bg-scroll-thumb: #4b4b4b;
   --bg-scroll-hover: #{lighten(#4b4b4b, 10%)};
   --bg-scroll-track: #111111;
+  --window-border: none;
 }
 
 .root {
@@ -28,25 +30,33 @@
   display: flex;
   flex-direction: column;
   box-shadow: var(--box-shadow-window);
-  overflow: hidden;
   opacity: 0;
-  animation: window-is-concealed 0.5s ease-in-out 0s forwards;
+  animation: window-is-concealed 0.2s ease-in-out 0s forwards;
 
-  // todo - window on focus
-  &:focus {
+  &:focus-within {
+    border: var(--window-border);
   }
 
   &.is-visible {
     animation: window-is-visible 0.5s ease-in-out 0s forwards;
   }
 
+  &__wrapper {
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+  }
+
   &.note {
     // Note dimension specification
-    --min-width: 120px;
+    --min-width: 200px;
     --max-width: 800px;
     --preferred-width: 305px;
     --preferred-height: 315px;
-    --min-height: 70px;
+    --min-height: 100px;
     --max-height: 100vh;
 
     // display: none;
@@ -55,6 +65,10 @@
     background-color: var(--secondary-theme-color);
     width: var(--preferred-width);
     height: var(--preferred-height);
+    min-width: var(--min-width);
+    max-width: var(--max-width);
+    min-height: var(--min-height);
+    max-height: var(--max-height);
   }
 
   &.controls {

@@ -1,4 +1,6 @@
 import AbstractView from './AbstractView.js';
+import ViewDataCache from './ViewDataCache.js';
+import Resizer from './Resizer.js';
 
 export default class WindowView extends AbstractView {
   constructor() {
@@ -6,10 +8,17 @@ export default class WindowView extends AbstractView {
     if (this.constructor === WindowView) {
       throw new Error('Can not instantiate an abstract class!');
     }
+
+    this.globalBroadcastEvent = ViewDataCache.globalBroadcastEvent;
   }
 
   _init() {
     return super._init()._setSavedWindowStyles();
+  }
+
+  _subscribeEvents() {
+    this.globalBroadcastEvent.subscribe(this._onGlobalBroadcast);
+    return this;
   }
 
   _setSavedWindowStyles() {
@@ -34,9 +43,11 @@ export default class WindowView extends AbstractView {
    * Element Listeners
    */
   _addWindowMoveEventListener() {
-    return this._addEventListener('mousedown', this.titleBar, this._onWindowMoveStart)
-      ._addEventListener('mouseup', this.titleBar, this._onWindowMoveEnd)
-      ._addEventListener('dragstart', this.titleBar, e => e.preventDefault());
+    return this._addEventListener('mousedown', this.titleBar, this._onWindowMoveStart)._addEventListener(
+      'dragstart',
+      this.titleBar,
+      e => e.preventDefault()
+    );
   }
 
   /**
@@ -45,15 +56,24 @@ export default class WindowView extends AbstractView {
 
   _onWindowMoveStart(event) {
     if (event.button === 0 && event.target === this.titleBar) {
-      const { top, left } = this.window.getBoundingClientRect();
+      const { top, left, width, height } = this.window.getBoundingClientRect();
+      const { width: pWidth, height: pHeight } = this.window.parentElement.getBoundingClientRect(); // extract width and height of the parent window
       const shift = { x: event.clientX - left, y: event.clientY - top };
 
       this.window.parentElement.addEventListener(
         'mousemove',
         (this._onWindowMoveEvent = e => {
-          this.parent.style.top = e.clientY - shift.y + 'px';
-          this.parent.style.left = e.clientX - shift.x + 'px';
+          const top = e.clientY - shift.y;
+          const left = e.clientX - shift.x;
+          if (top > 0 && top + height < pHeight) this.parent.style.top = top + 'px';
+
+          if (left > 0 && left + width < pWidth) this.parent.style.left = left + 'px';
         })
+      );
+
+      this.window.parentElement.addEventListener(
+        'mouseup',
+        (this._onMouseupOnParentWindow = () => this._onWindowMoveEnd())
       );
 
       this.window.parentElement.addEventListener(
@@ -66,10 +86,13 @@ export default class WindowView extends AbstractView {
   _onWindowMoveEnd() {
     this.window.parentElement.removeEventListener('mousemove', this._onWindowMoveEvent);
     this.window.parentElement.removeEventListener('mouseleave', this._onMouseLeaveParentWindow);
+    this.window.parentElement.removeEventListener('mouseup', this._onMouseupOnParentWindow);
   }
 
   /**
-   * A function that sets a closed in value to true if the event is 'focusin' else false if 'focusout'. This is to control the execution of the focusInEvent dispatch notifier to run only once till a focusout occurs.
+   * A function that sets a closed in value to true if the event is 'focusin'
+   * else false if 'focusout'. This is to control the execution of the
+   * focusInEvent dispatch notifier to run only once till a focusout occurs.
    */
   _onFocusInOrOut = (() => {
     let firstRun = true;
@@ -110,5 +133,10 @@ export default class WindowView extends AbstractView {
   conceal() {
     this.parent.classList.remove('is-visible');
     setTimeout(() => (this.parent.style.display = 'none'), 1000);
+  }
+
+  initTools() {
+    this.resizer = new Resizer(this.parent);
+    return this;
   }
 }

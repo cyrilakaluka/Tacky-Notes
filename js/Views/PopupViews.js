@@ -174,8 +174,8 @@ const Tooltip = (function () {
       elements.forEach(element => callback(element));
     }
 
-    attachTo(parent) {
-      parent.append(this.parent);
+    attachTo(host) {
+      host.append(this.parent);
       return this;
     }
 

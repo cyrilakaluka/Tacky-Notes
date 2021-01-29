@@ -24,7 +24,6 @@ export default class SideControlsView extends AbstractView {
 
   _initEvents() {
     return this._addNewNoteButtonListener()._addNotesListButtonListener();
-    return this;
   }
 
   _addNewNoteButtonListener() {

@@ -44,12 +44,12 @@
   }
 }
 
-.note > .title-bar > :first-child {
+.note .title-bar > :first-child {
   margin-right: auto;
 }
 
-.note:focus-within > .title-bar,
-.note:focus > .title-bar {
+.note:focus-within .title-bar,
+.note:focus .title-bar {
   transform: translateY(0);
 
   pointer-events: auto;
@@ -59,11 +59,11 @@
   }
 }
 
-.controls > .title-bar--main > :first-child {
+.controls .title-bar--main > :first-child {
   margin-right: auto;
 }
 
-.controls > .title-bar--settings > :last-child {
+.controls .title-bar--settings > :last-child {
   margin-left: auto;
 }
 

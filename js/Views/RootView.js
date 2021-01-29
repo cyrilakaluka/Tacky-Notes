@@ -52,9 +52,11 @@ export default class RootView extends AbstractView {
       if (view.zIndex === this.settings.highestZIndex) {
         setTimeout(() => view.textArea.focus(), TIMEOUT_TO_FOCUS);
       }
+      view.initTools();
       view.display();
     });
     this.root.append(this.controlsView.parent);
+    this.controlsView.initTools();
     this.toolTip.attachTo(this.root).addListenersFrom(this.root);
     return this;
   }

@@ -60,9 +60,15 @@ export default class View {
   actionNoteCreated = data => {
     const noteView = ViewFactory.createView('note', data);
     const thumbnailView = ViewFactory.createView('thumbnail', noteView);
+    noteView.deleteNoteEvent.subscribe(this._handleDeleteNoteEvent);
+    noteView.updateNoteEvent.subscribe(this._handleUpdateNoteEvent);
     ViewDataCache.noteViews.push(noteView);
     ViewDataCache.thumbnailViews.push(thumbnailView);
     ViewDataCache.rootView.prepareNewNote(noteView);
     ViewDataCache.notesListView.prepareNewThumbnail(thumbnailView);
   };
+
+  actionNoteUpdated = () => {};
+
+  actionNoteDeleted = () => {};
 }

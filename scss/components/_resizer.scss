@@ -1,0 +1,67 @@
+.resizers {
+  position: static;
+}
+
+.resizer {
+  position: absolute;
+  background-color: transparent;
+  z-index: 9999999999;
+
+  &.horizontal {
+    height: 5px;
+    left: 4px;
+    right: 4px;
+    cursor: ns-resize;
+
+    &.top {
+      top: -4px;
+    }
+
+    &.bottom {
+      bottom: -4px;
+    }
+  }
+
+  &.vertical {
+    width: 5px;
+    top: 4px;
+    bottom: 4px;
+    cursor: ew-resize;
+
+    &.left {
+      left: -4px;
+    }
+
+    &.right {
+      right: -4px;
+    }
+  }
+
+  &.edge {
+    height: 8px;
+    width: 8px;
+    cursor: nwse-resize;
+
+    &.top-left {
+      top: -4px;
+      left: -4px;
+    }
+
+    &.bottom-right {
+      bottom: -4px;
+      right: -4px;
+    }
+
+    &.top-right {
+      top: -4px;
+      right: -4px;
+      cursor: nesw-resize;
+    }
+
+    &.bottom-left {
+      bottom: -4px;
+      left: -4px;
+      cursor: nesw-resize;
+    }
+  }
+}

@@ -23,7 +23,7 @@ export default class Controller {
   };
 
   _handleDeletedNoteEvent = (sender, data) => {
-    this.model.actionNoteDeleted(data);
+    this.view.actionNoteDeleted(data);
   };
 
   _handleCreateNoteEvent = (sender, data) => {

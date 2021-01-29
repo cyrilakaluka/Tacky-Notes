@@ -62,8 +62,8 @@ export default class ThumbnailView extends AbstractView {
     this.overview.value = data.text;
   };
 
-  _onUpdateThemeEvent = (source, data) => {
-    this.parent.dataset.colorTheme = data.colorTheme;
+  _onUpdateThemeEvent = source => {
+    this.parent.dataset.colorTheme = source.colorTheme;
   };
 
   /**

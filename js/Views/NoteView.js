@@ -1,7 +1,7 @@
 import WindowView from './WindowView.js';
-import ViewDataCache from './ViewDataCache.js';
 import Event from '../EventDispatcher.js';
 import Helper from '../Helpers.js';
+const applyDelay = Helper.delay;
 
 export default class NoteView extends WindowView {
   constructor(note) {
@@ -12,7 +12,6 @@ export default class NoteView extends WindowView {
     this.status = note.status;
     this.centered = note.centered;
     this.zIndex = +note.style['z-index'];
-    this.globalBroadcastEvent = ViewDataCache.globalBroadcastEvent;
     this.addNoteEvent = new Event(this);
     this.deleteNoteEvent = new Event(this);
     this.closeNoteEvent = new Event(this);
@@ -66,15 +65,18 @@ export default class NoteView extends WindowView {
       ._addWindowMoveEventListener();
   }
 
-  _subscribeEvents() {
-    this.globalBroadcastEvent.subscribe(this._onGlobalBroadcast);
-    return this;
-  }
-
   _setSavedWindowStyles() {
     super._setSavedWindowStyles();
     // Apply theme color
     this.parent.dataset.themeColor = this.note.themeColor;
+    // Set checked color theme selector
+    this.themeSelectors.forEach(selector => {
+      if (selector.value === this.note.themeColor) {
+        selector.checked = true;
+      } else {
+        selector.checked = false;
+      }
+    });
     return this;
   }
 
@@ -91,8 +93,8 @@ export default class NoteView extends WindowView {
       this.closeButton,
       this._notifyHandler,
       this._onCloseButtonClick,
-      this.closeNoteEvent,
-      this.note
+      [this.closeNoteEvent, this.updateNoteEvent],
+      [null, this.note]
     );
   }
 
@@ -126,8 +128,8 @@ export default class NoteView extends WindowView {
         selector,
         this._notifyHandler,
         this._onThemeSelect,
-        this.updateThemeEvent,
-        this.note
+        [this.updateThemeEvent, this.updateNoteEvent],
+        [null, this.note]
       )
     );
     return this;
@@ -156,7 +158,12 @@ export default class NoteView extends WindowView {
    * Event handlers / callbacks
    */
   _onCloseButtonClick() {
+    const WINDOW_CLOSE_ANIMATION_DELAY = 300;
+    this.parent.classList.remove('is-visible');
+    applyDelay(WINDOW_CLOSE_ANIMATION_DELAY).then(() => (this.parent.style.zIndex = '-1'));
+    this.zIndex = -1;
     this.note.status = 'closed';
+    this.note['z-index'] = -1;
   }
 
   _onMenuButtonClick() {
@@ -190,7 +197,8 @@ export default class NoteView extends WindowView {
   }
 
   _getParentInnerMarkup(id) {
-    return `<div id="title-bar-${id}" class="title-bar title-bar--note">
+    return `<div class="window__wrapper">
+    <div id="title-bar-${id}" class="title-bar title-bar--note">
       <button id="add-btn-${id}" class="button button--icon" data-hover="New Note">
         <svg class="icon icon--plus">
           <use href="icons/sprite.svg#plus"></use>
@@ -286,6 +294,7 @@ export default class NoteView extends WindowView {
         </button>
       </div>
     </div>
+    </div> 
     `;
   }
 }

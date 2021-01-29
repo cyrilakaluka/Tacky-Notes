@@ -15,7 +15,6 @@ export default class ControlsView extends WindowView {
     this.addNoteEvent = new Event(this);
     this.updateSettingsEvent = new Event(this);
     this.focusInEvent = new Event(this);
-    this.globalBroadcastEvent = ViewDataCache.globalBroadcastEvent;
     this.settingsView = ViewDataCache.settingsView;
     this.notesListView = ViewDataCache.notesListView;
     super._init();
@@ -50,11 +49,6 @@ export default class ControlsView extends WindowView {
       ._addSettingsButtonListener()
       ._addCloseButtonEventListener()
       ._addBackButtonListener();
-  }
-
-  _subscribeEvents() {
-    this.globalBroadcastEvent.subscribe(this._onGlobalBroadcast);
-    return this;
   }
 
   _addNewNoteButtonListener() {
@@ -102,7 +96,8 @@ export default class ControlsView extends WindowView {
   }
 
   _getParentInnerMarkup() {
-    return `<div id="notes-list-title-bar" class="title-bar title-bar--main">
+    return `<div class="window__wrapper">
+    <div id="notes-list-title-bar" class="title-bar title-bar--main">
     <button id="add-btn-01" class="button button--icon" data-hover="New Note">
       <svg class="icon icon--plus">
         <use href="icons/sprite.svg#plus"></use>
@@ -131,6 +126,7 @@ export default class ControlsView extends WindowView {
         <use href="icons/sprite.svg#close"></use>
       </svg>
     </button>
+  </div>
   </div>`;
   }
 }
