@@ -2,6 +2,7 @@ import AbstractView from './AbstractView.js';
 import ViewDataCache from './ViewDataCache.js';
 import Event from '../EventDispatcher.js';
 import Helper from '../Helpers.js';
+import Markup from './View.Markups.js';
 
 export default class SettingsView extends AbstractView {
   constructor() {
@@ -18,7 +19,7 @@ export default class SettingsView extends AbstractView {
   }
 
   _createChildren() {
-    this.parent.innerHTML = this._getParentInnerMarkup().trim();
+    this.parent.innerHTML = this._getParentInnerMarkup();
     this.enableInsightsCheckbox = this._getElement('#insights-toggle');
     this.confirmOnDeleteCheckbox = this._getElement('#confirm-delete-toggle');
     this.themeModeCheckbox = this._getElement('#theme-toggle');
@@ -82,55 +83,6 @@ export default class SettingsView extends AbstractView {
   }
 
   _getParentInnerMarkup() {
-    return `
-    <div class="settings settings--general">
-      <h3 class="settings__header">General</h3>
-      <div class="setting">
-        <div class="name">Enable insights</div>
-        <div class="toggle">
-          <input type="checkbox" id="insights-toggle" />
-          <label for="insights-toggle"> </label>
-        </div>
-      </div>
-      <div class="setting">
-        <div class="name">Confirm before deleting</div>
-        <div class="toggle">
-          <input type="checkbox" id="confirm-delete-toggle" />
-          <label for="confirm-delete-toggle"> </label>
-        </div>
-      </div>
-    </div>
-    <div class="settings">
-      <h3 class="settings__header">Switch theme</h3>
-      <div class="setting setting--theme">
-        <div class="toggle">
-          <input type="checkbox" id="theme-toggle" />
-          <label for="theme-toggle"> </label>
-          <svg class="icon icon--lights">
-            <use href="icons/sprite.svg#lights"></use>
-          </svg>
-          <svg class="icon icon--night-mode">
-            <use href="icons/sprite.svg#night-mode"></use>
-          </svg>
-        </div>
-      </div>
-    </div>
-    <div class="settings settings--help">
-      <h3 class="settings__header">Help & feedback</h3>
-      <div class="links">
-        <a href="#">Help</a>
-        <a href="#">Share feedback</a>
-        <a href="#">Rate us</a>
-      </div>
-    </div>
-    <div class="settings settings--about">
-      <h3 class="settings__header">About</h3>
-      <small class="version-info">Tacky Notes rev 1.0.0</small><br />
-      <small class="copyrights">&copy; 2021 Marvis Claire Enterprise. All rights reserved.</small>
-      <div class="links">
-        <a href="#">Terms of use</a>
-        <a href="#">Privacy Policy</a>
-      </div>
-    </div>`;
+    return Markup.getMarkup('settings');
   }
 }

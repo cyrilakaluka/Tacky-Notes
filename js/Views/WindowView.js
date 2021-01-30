@@ -1,6 +1,7 @@
 import AbstractView from './AbstractView.js';
 import ViewDataCache from './ViewDataCache.js';
-import Resizer from './Resizer.js';
+import Resizer from './Tools/Resizer.js';
+import Mover from './Tools/Mover.js';
 
 export default class WindowView extends AbstractView {
   constructor() {
@@ -13,7 +14,7 @@ export default class WindowView extends AbstractView {
   }
 
   _init() {
-    return super._init()._setSavedWindowStyles();
+    return super._init()._setSavedWindowStyles()._initializeTools();
   }
 
   _subscribeEvents() {
@@ -35,58 +36,29 @@ export default class WindowView extends AbstractView {
     return this;
   }
 
+  _initializeTools() {
+    this.resizer = new Resizer().attachTo(this.parent).setCallback(this._onResizerCallback.bind(this));
+
+    this.winMover = new Mover(this.parent, this.titleBar).setCallback(this._onWindowMoverCallback.bind(this)).run();
+    return this;
+  }
+
+  /**
+   * Event handlers/ callbacks
+   */
+
   _onGlobalBroadcast = (source, action) => {
-    action.call(this);
+    if (action && typeof action === 'function') {
+      action.call(this);
+    }
   };
 
-  /**
-   * Element Listeners
-   */
-  _addWindowMoveEventListener() {
-    return this._addEventListener('mousedown', this.titleBar, this._onWindowMoveStart)._addEventListener(
-      'dragstart',
-      this.titleBar,
-      e => e.preventDefault()
-    );
+  _onResizerCallback() {
+    this._updatePosition()._updateDimension()._notifyUpdate();
   }
 
-  /**
-   * Event handlers
-   */
-
-  _onWindowMoveStart(event) {
-    if (event.button === 0 && event.target === this.titleBar) {
-      const { top, left, width, height } = this.window.getBoundingClientRect();
-      const { width: pWidth, height: pHeight } = this.window.parentElement.getBoundingClientRect(); // extract width and height of the parent window
-      const shift = { x: event.clientX - left, y: event.clientY - top };
-
-      this.window.parentElement.addEventListener(
-        'mousemove',
-        (this._onWindowMoveEvent = e => {
-          const top = e.clientY - shift.y;
-          const left = e.clientX - shift.x;
-          if (top > 0 && top + height < pHeight) this.parent.style.top = top + 'px';
-
-          if (left > 0 && left + width < pWidth) this.parent.style.left = left + 'px';
-        })
-      );
-
-      this.window.parentElement.addEventListener(
-        'mouseup',
-        (this._onMouseupOnParentWindow = () => this._onWindowMoveEnd())
-      );
-
-      this.window.parentElement.addEventListener(
-        'mouseleave',
-        (this._onMouseLeaveParentWindow = () => this._onWindowMoveEnd())
-      );
-    }
-  }
-
-  _onWindowMoveEnd() {
-    this.window.parentElement.removeEventListener('mousemove', this._onWindowMoveEvent);
-    this.window.parentElement.removeEventListener('mouseleave', this._onMouseLeaveParentWindow);
-    this.window.parentElement.removeEventListener('mouseup', this._onMouseupOnParentWindow);
+  _onWindowMoverCallback() {
+    this._updatePosition()._updateCentered(false)._notifyUpdate();
   }
 
   /**
@@ -135,8 +107,18 @@ export default class WindowView extends AbstractView {
     setTimeout(() => (this.parent.style.display = 'none'), 1000);
   }
 
-  initTools() {
-    this.resizer = new Resizer(this.parent);
-    return this;
+  /**
+   * Abstract methods
+   */
+  _updatePosition() {
+    throw new Error('Abstract method must be implemented in concrete object');
+  }
+
+  _updateDimension() {
+    throw new Error('Abstract method must be implemented in concrete object');
+  }
+
+  _notifyUpdate() {
+    throw new Error('Abstract method must be implemented in concrete object');
   }
 }

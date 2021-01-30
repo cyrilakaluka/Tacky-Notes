@@ -8,8 +8,7 @@ import {
   ThumbnailView,
 } from './Index.js';
 import Event from '../EventDispatcher.js';
-import Popups from './PopupViews.js';
-const Tooltip = Popups.Tooltip;
+import Tooltip from './Tools/Tooltip.js';
 
 export default class ViewDataCache {
   static init({ appSettings, notesList }) {

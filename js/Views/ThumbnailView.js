@@ -1,5 +1,6 @@
 import AbstractView from './AbstractView.js';
 import Helper from '../Helpers.js';
+import Markup from './View.Markups.js';
 
 export default class ThumbnailView extends AbstractView {
   constructor(noteView) {
@@ -18,7 +19,7 @@ export default class ThumbnailView extends AbstractView {
   }
 
   _createChildren() {
-    this.parent.innerHTML = this._getParentInnerMarkup().trim();
+    this.parent.innerHTML = this._getParentInnerMarkup();
     this.time = this._getElement('.time');
     this.time.innerText = this.note.modified.toLocaleTimeString();
     this.overview = this._getElement('.overview');
@@ -104,14 +105,6 @@ export default class ThumbnailView extends AbstractView {
   }
 
   _getParentInnerMarkup() {
-    return `
-        <small class="time"></small>
-        <button class="button button--icon" data-hover="Menu">
-          <svg class="icon icon--options">
-            <use href="icons/sprite.svg#options"></use>
-          </svg>
-        </button>
-        <textarea class="overview" readonly>
-        </textarea>`;
+    return Markup.getMarkup('thumbnail');
   }
 }

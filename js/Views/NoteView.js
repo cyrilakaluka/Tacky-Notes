@@ -1,7 +1,8 @@
 import WindowView from './WindowView.js';
 import Event from '../EventDispatcher.js';
 import Helper from '../Helpers.js';
-const applyDelay = Helper.delay;
+import Markup from './View.Markups.js';
+const delay = Helper.delay;
 
 export default class NoteView extends WindowView {
   constructor(note) {
@@ -24,6 +25,10 @@ export default class NoteView extends WindowView {
     super._init();
   }
 
+  /**
+   * initializers
+   */
+
   _createParent() {
     this.parent = this.window = Helper.createElement('div', 'note', 'window');
     this.parent.id = 'note-' + this.id;
@@ -34,7 +39,7 @@ export default class NoteView extends WindowView {
 
   _createChildren() {
     let id = this.id;
-    this.parent.innerHTML = this._getParentInnerMarkup(id).trim();
+    this.parent.innerHTML = this._getParentInnerMarkup();
     this.addButton = this._getElement(`#add-btn-${id}`);
     this.closeButton = this._getElement(`#close-btn-${id}`);
     this.menuButton = this._getElement(`#options-btn-${id}`);
@@ -61,8 +66,7 @@ export default class NoteView extends WindowView {
       ._addNotesListButtonListener()
       ._addThemeSelectorsEventListener()
       ._addFocusInListener()
-      ._addFocusOutListener()
-      ._addWindowMoveEventListener();
+      ._addFocusOutListener();
   }
 
   _setSavedWindowStyles() {
@@ -81,7 +85,7 @@ export default class NoteView extends WindowView {
   }
 
   /**
-   * Element Listeners
+   * Add Element Listeners
    */
   _addNewNoteButtonListener() {
     return this._addEventListener('click', this.addButton, this._notifyHandler, null, this.addNoteEvent, this.note);
@@ -160,10 +164,8 @@ export default class NoteView extends WindowView {
   _onCloseButtonClick() {
     const WINDOW_CLOSE_ANIMATION_DELAY = 300;
     this.parent.classList.remove('is-visible');
-    applyDelay(WINDOW_CLOSE_ANIMATION_DELAY).then(() => (this.parent.style.zIndex = '-1'));
-    this.zIndex = -1;
-    this.note.status = 'closed';
-    this.note['z-index'] = -1;
+    delay(WINDOW_CLOSE_ANIMATION_DELAY).then(() => (this.parent.style.zIndex = '-1'));
+    this._updateZIndex()._updateStatus('closed')._notifyUpdate();
   }
 
   _onMenuButtonClick() {
@@ -196,105 +198,47 @@ export default class NoteView extends WindowView {
     this.note.modified = new Date();
   }
 
-  _getParentInnerMarkup(id) {
-    return `<div class="window__wrapper">
-    <div id="title-bar-${id}" class="title-bar title-bar--note">
-      <button id="add-btn-${id}" class="button button--icon" data-hover="New Note">
-        <svg class="icon icon--plus">
-          <use href="icons/sprite.svg#plus"></use>
-        </svg>
-      </button>
-      <button id="options-btn-${id}" class="button button--icon" data-hover="Menu">
-        <svg class="icon icon--options">
-          <use href="icons/sprite.svg#options"></use>
-        </svg>
-      </button>
-      <button id="close-btn-${id}" class="button button--icon" data-hover="Close Note">
-        <svg class="icon icon--close">
-          <use href="icons/sprite.svg#close"></use>
-        </svg>
-      </button>
-    </div>
-    <div id="menu-${id}" class="menu">
-      <div class="color-themes">
-        <span>
-          <input checked type="radio" name="color-theme" value="yellow" data-hover="Yellow" />
-          <label></label>
-        </span>
-        <span>
-          <input type="radio" name="color-theme" value="green" data-hover="Green" />
-          <label></label>
-        </span>
-        <span>
-          <input type="radio" name="color-theme" value="pink" data-hover="Pink" />
-          <label></label>
-        </span>
-        <span>
-          <input type="radio" name="color-theme" value="purple" data-hover="Purple" />
-          <label></label>
-        </span>
-        <span>
-          <input type="radio" name="color-theme" value="blue" data-hover="Blue" />
-          <label></label>
-        </span>
-        <span>
-          <input type="radio" name="color-theme" value="grey" data-hover="Grey" />
-          <label></label>
-        </span>
-        <span>
-          <input type="radio" name="color-theme" value="black" data-hover="Charcoal" />
-          <label></label>
-        </span>
-      </div>
-      <button id="notes-list-btn-${id}" class="menu__button button button--notes-list" data-hover="Notes List">
-        <svg class="icon icon--menu">
-          <use href="icons/sprite.svg#menu"></use>
-        </svg>
-        <span>Notes List</span>
-      </button>
-      <button id="delete-btn-${id}" class="menu__button button button--delete" data-hover="Delete Note">
-        <svg class="icon icon--delete">
-          <use href="icons/sprite.svg#delete"></use>
-        </svg>
-        <span>Delete Note</span>
-      </button>
-    </div>
-    <textarea id="textarea-${id}" class="panel text-area" placeholder="Take a note..."></textarea>
-    <div class="panel tool-bar">
-      <div class="wrapper flex justify-space-between">
-        <button id="bold-btn-${id}" class="button button--icon" data-hover="Bold">
-          <svg class="icon icon--bold">
-            <use href="icons/sprite.svg#bold"></use>
-          </svg>
-        </button>
-        <button id="italic-btn-${id}" class="button button--icon" data-hover="Italic">
-          <svg class="icon icon--italic">
-            <use href="icons/sprite.svg#italic"></use>
-          </svg>
-        </button>
-        <button id="underline-btn-${id}" class="button button--icon" data-hover="Underline">
-          <svg class="icon icon--underline">
-            <use href="icons/sprite.svg#underline"></use>
-          </svg>
-        </button>
-        <button id="strike-through-btn-${id}" class="button button--icon" data-hover="Strikethrough">
-          <svg class="icon icon--strikethrough">
-            <use href="icons/sprite.svg#strikethrough"></use>
-          </svg>
-        </button>
-        <button id="bullet-list-btn-${id}" class="button button--icon" data-hover="Toggle Bullets">
-          <svg class="icon icon--bullet-list">
-            <use href="icons/sprite.svg#bullet-list"></use>
-          </svg>
-        </button>
-        <button id="#image-insertion-btn-${id}" class="button button--icon" data-hover="Add Image">
-          <svg class="icon icon--image">
-            <use href="icons/sprite.svg#image"></use>
-          </svg>
-        </button>
-      </div>
-    </div>
-    </div> 
-    `;
+  /**
+   * Property update methods
+   */
+  _updatePosition() {
+    this.note.style['top'] = this.parent.style.top;
+    this.note.style['bottom'] = this.parent.style.bottom;
+    this.note.style['left'] = this.parent.style.left;
+    this.note.style['right'] = this.parent.style.right;
+    return this;
+  }
+
+  _updateDimension() {
+    const { width, height } = this.parent.getBoundingClientRect();
+    this.note.style['width'] = width + 'px';
+    this.note.style['height'] = height + 'px';
+    return this;
+  }
+
+  _updateZIndex() {
+    this.zIndex = this.parent.style.zIndex;
+    this.note.style['z-index'] = this.zIndex;
+  }
+
+  _updateStatus(status) {
+    this.note.status = status;
+  }
+
+  _updateCentered(value) {
+    this.centered = value;
+    this.note.centered = value;
+    return this;
+  }
+
+  _notifyUpdate() {
+    this.updateNoteEvent.notify(this.note);
+  }
+
+  /**
+   * Helper methods
+   */
+  _getParentInnerMarkup() {
+    return Markup.getMarkup('note', { id: this.id });
   }
 }

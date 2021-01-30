@@ -1,6 +1,7 @@
 import AbstractView from './AbstractView.js';
 import ViewDataCache from './ViewDataCache.js';
 import Helper from '../Helpers.js';
+import Markup from './View.Markups.js';
 
 export default class NotesListView extends AbstractView {
   constructor() {
@@ -18,7 +19,7 @@ export default class NotesListView extends AbstractView {
   }
 
   _createChildren() {
-    this.parent.innerHTML = this._getParentInnerMarkup().trim();
+    this.parent.innerHTML = this._getParentInnerMarkup();
     this.search = this._getElement('#search');
     this.searchButton = this._getElement('#button-search');
     this.clearButton = this._getElement('#button-clear');
@@ -43,25 +44,7 @@ export default class NotesListView extends AbstractView {
   }
 
   _getParentInnerMarkup() {
-    return `
-    <h2 class="header-2">Tacky Notes</h2>
-    <div class="search-field">
-      <input id="search" type="text" placeholder="Search..." />
-      <div class="buttons">
-        <button id="button-clear" class="button button--icon">
-          <svg class="icon icon--close">
-            <use href="icons/sprite.svg#close"></use>
-          </svg>
-        </button>
-        <button id="button-search" class="button button--icon">
-          <svg class="icon icon--search">
-            <use href="icons/sprite.svg#search"></use>
-          </svg>
-        </button>
-      </div>
-    </div>
-    <ul id="thumbnails" class="thumbnails">
-    </ul>`;
+    return Markup.getMarkup('notesList');
   }
 
   /**

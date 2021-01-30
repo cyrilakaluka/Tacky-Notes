@@ -2,6 +2,7 @@ import WindowView from './WindowView.js';
 import ViewDataCache from './ViewDataCache.js';
 import Event from '../EventDispatcher.js';
 import Helper from '../Helpers.js';
+import Markup from './View.Markups.js';
 
 export default class ControlsView extends WindowView {
   constructor() {
@@ -29,7 +30,7 @@ export default class ControlsView extends WindowView {
   }
 
   _createChildren() {
-    this.parent.innerHTML = this._getParentInnerMarkup().trim();
+    this.parent.innerHTML = this._getParentInnerMarkup();
     this.parent.append(this.notesListView.parent);
     this.parent.append(this.settingsView.parent);
     this.addNoteButton = this._getElement('#add-btn-01');
@@ -96,37 +97,6 @@ export default class ControlsView extends WindowView {
   }
 
   _getParentInnerMarkup() {
-    return `<div class="window__wrapper">
-    <div id="notes-list-title-bar" class="title-bar title-bar--main">
-    <button id="add-btn-01" class="button button--icon" data-hover="New Note">
-      <svg class="icon icon--plus">
-        <use href="icons/sprite.svg#plus"></use>
-      </svg>
-    </button>
-    <button id="setting-btn-01" class="button button--icon" data-hover="Settings">
-      <svg class="icon icon--settings">
-        <use href="icons/sprite.svg#settings"></use>
-      </svg>
-    </button>
-    <button id="close-btn-01-1" class="button button--icon" data-hover="Close Window">
-      <svg class="icon icon--close">
-        <use href="icons/sprite.svg#close"></use>
-      </svg>
-    </button>
-  </div>
-  <div id="settings-title-bar" class="title-bar title-bar--settings" data-hover="Back">
-    <button id="back-btn-01" class="button button--icon">
-      <svg class="icon icon--left-arrow">
-        <use href="icons/sprite.svg#left-arrow"></use>
-      </svg>
-    </button>
-    <h2 class="title">Settings</h2>
-    <button id="close-btn-01-2" class="button button--icon" data-hover="Close Window">
-      <svg class="icon icon--close">
-        <use href="icons/sprite.svg#close"></use>
-      </svg>
-    </button>
-  </div>
-  </div>`;
+    return Markup.getMarkup('controls');
   }
 }

@@ -1,6 +1,7 @@
 import AbstractView from './AbstractView.js';
 import Event from '../EventDispatcher.js';
 import Helper from '../Helpers.js';
+import Markup from './View.Markups.js';
 
 export default class SideControlsView extends AbstractView {
   constructor() {
@@ -16,7 +17,7 @@ export default class SideControlsView extends AbstractView {
   }
 
   _createChildren() {
-    this.parent.innerHTML = this._getParentInnerMarkup().trim();
+    this.parent.innerHTML = this._getParentInnerMarkup();
     this.addNoteButton = this._getElement('#action-new-note');
     this.notesListButton = this._getElement('#action-notes-list');
     return this;
@@ -35,18 +36,6 @@ export default class SideControlsView extends AbstractView {
   }
 
   _getParentInnerMarkup() {
-    return `
-        <button id="action-new-note" class="button side-control">
-          <svg class="icon icon--add">
-            <use href="icons/sprite.svg#plus"></use>
-          </svg>
-          <span>Add Note</span>
-        </button>
-        <button id="action-notes-list" class="button side-control">
-          <svg class="icon icon--menu">
-            <use href="icons/sprite.svg#menu"></use>
-          </svg>
-          <span>Notes List</span>
-        </button>`;
+    return Markup.getMarkup('sideControls');
   }
 }

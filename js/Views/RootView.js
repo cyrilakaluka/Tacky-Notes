@@ -32,10 +32,8 @@ export default class RootView extends AbstractView {
   }
 
   _subscribeEvents() {
-    // NoteViewModel events
-    this.noteViews.forEach(noteView => {
-      noteView.addNoteEvent.subscribe(this._onAddNoteEventFromNoteView);
-      noteView.focusInEvent.subscribe(this._onFocusInEventNotification);
+    this.noteViews.forEach(view => {
+      this._subscribeNoteViewEvents(view);
     });
     this.controlsView.addNoteEvent.subscribe(this._onAddNoteEventFromControlsView);
     this.controlsView.focusInEvent.subscribe(this._onFocusInEventNotification);
@@ -43,26 +41,29 @@ export default class RootView extends AbstractView {
     return this;
   }
 
+  _subscribeNoteViewEvents(view) {
+    view.addNoteEvent.subscribe(this._onAddNoteEventFromNoteView);
+    view.focusInEvent.subscribe(this._onFocusInEventNotification);
+  }
+
   _build() {
     this.root.innerHTML = '';
     this.root.append(this.sideControlsView.parent);
     this.noteViews.forEach(view => {
-      const TIMEOUT_TO_FOCUS = 500;
-      this.root.append(view.parent);
-      if (view.zIndex === this.settings.highestZIndex) {
-        setTimeout(() => view.textArea.focus(), TIMEOUT_TO_FOCUS);
-      }
-      view.initTools();
-      view.display();
+      this._buildNoteView(view);
     });
     this.root.append(this.controlsView.parent);
-    this.controlsView.initTools();
     this.toolTip.attachTo(this.root).addListenersFrom(this.root);
     return this;
   }
 
-  _addClickEvent() {
-    return this._addEventListener('click', this.root, this._onClickEvent);
+  _buildNoteView(view) {
+    const TIMEOUT_TO_FOCUS = 500;
+    this.root.append(view.parent);
+    if (view.zIndex === this.settings.highestZIndex) {
+      setTimeout(() => view.textArea.focus(), TIMEOUT_TO_FOCUS);
+    }
+    view.display();
   }
 
   _onAddNoteEventFromNoteView = (source, data) => {
@@ -149,13 +150,8 @@ export default class RootView extends AbstractView {
    * Public Methods
    */
   prepareNewNote(noteView) {
-    // subscribe to new note view events
-    noteView.addNoteEvent.subscribe(this._onAddNoteEventFromNoteView);
-    noteView.focusInEvent.subscribe(this._onFocusInEventNotification);
-    // append note view's parent element to root
-    this.root.append(noteView.parent);
     this.toolTip.addListenersFrom(noteView.parent);
-    setTimeout(() => noteView.textArea.focus(), 500);
-    noteView.display();
+    this._subscribeNoteViewEvents(noteView);
+    this._buildNoteView(noteView);
   }
 }
