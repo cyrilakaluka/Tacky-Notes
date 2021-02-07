@@ -2,6 +2,7 @@ import WindowView from './WindowView.js';
 import Event from '../EventDispatcher.js';
 import Helper from '../Helpers.js';
 import Markup from './View.Markups.js';
+import Editor from '../Editor/Editor.js';
 const delay = Helper.delay;
 
 export default class NoteView extends WindowView {
@@ -22,6 +23,7 @@ export default class NoteView extends WindowView {
     this.updateThemeEvent = new Event(this);
     this.openNotesListEvent = new Event(this);
     this.updateNoteEvent = new Event(this);
+
     super._init();
   }
 
@@ -40,18 +42,20 @@ export default class NoteView extends WindowView {
   _createChildren() {
     let id = this.id;
     this.parent.innerHTML = this._getParentInnerMarkup();
+    this.toolbar = this._getElement(`#toolbar-${id}`);
     this.addButton = this._getElement(`#add-btn-${id}`);
     this.closeButton = this._getElement(`#close-btn-${id}`);
     this.menuButton = this._getElement(`#options-btn-${id}`);
     this.notesListButton = this._getElement(`#notes-list-btn-${id}`);
     this.deleteButton = this._getElement(`#delete-btn-${id}`);
-    this.textArea = this._getElement(`#textarea-${id}`);
+    this.textContent = this._getElement(`#contenteditable-${id}`);
     this.boldButton = this._getElement(`#bold-btn-${id}`);
     this.italicButton = this._getElement(`#italic-btn-${id}`);
     this.underlineButton = this._getElement(`#underline-btn-${id}`);
     this.strikeThroughButton = this._getElement(`#strike-through-btn-${id}`);
     this.bulletListButton = this._getElement(`#bullet-list-btn-${id}`);
     this.imageInsertionButton = this._getElement(`#image-insertion-btn-${id}`);
+    this.linkButton = this._getElement(`#create-link-btn-${id}`);
     this.themeSelectors = this._getAllElements('[name="color-theme"]');
     this.optionsMenu = this._getElement(`#menu-${id}`);
     this.titleBar = this._getElement(`#title-bar-${id}`);
@@ -82,6 +86,11 @@ export default class NoteView extends WindowView {
       }
     });
     return this;
+  }
+
+  _initializeTools() {
+    super._initializeTools();
+    this.textEditor = new Editor(this._getEditorConfig());
   }
 
   /**
@@ -142,9 +151,9 @@ export default class NoteView extends WindowView {
   _addTextareaEventListener() {
     return this._addEventListener(
       'change',
-      this.textArea,
+      this.textContent,
       this._notifyHandler,
-      this._onTextareaChange,
+      this._onTextContentChange,
       this.updateTextEvent,
       this.note
     );
@@ -194,9 +203,11 @@ export default class NoteView extends WindowView {
     this.parent.dataset.themeColor = this.note.themeColor;
   }
 
-  _onTextareaChange() {
+  _onTextContentChange() {
     this.note.modified = new Date();
   }
+
+  _onEditorCallback() {}
 
   /**
    * Property update methods
@@ -210,9 +221,15 @@ export default class NoteView extends WindowView {
   }
 
   _updateDimension() {
+    const TOOLBAR_MIN_WIDTH = 264;
     const { width, height } = this.parent.getBoundingClientRect();
     this.note.style['width'] = width + 'px';
     this.note.style['height'] = height + 'px';
+    // if (width < TOOLBAR_MIN_WIDTH) {
+    //   this.toolbar.classList.remove('is-visible');
+    // } else {
+    //   this.toolbar.classList.add('is-visible');
+    // }
     return this;
   }
 
@@ -238,6 +255,44 @@ export default class NoteView extends WindowView {
   /**
    * Helper methods
    */
+  _getEditorConfig() {
+    return {
+      content: {
+        contenteditable: this.textContent,
+      },
+      buttons: [
+        {
+          element: this.boldButton,
+          command: 'Bold',
+        },
+        {
+          element: this.italicButton,
+          command: 'Italic',
+        },
+        {
+          element: this.underlineButton,
+          command: 'Underline',
+        },
+        {
+          element: this.strikeThroughButton,
+          command: 'StrikeThrough',
+        },
+        {
+          element: this.bulletListButton,
+          command: 'BulletList',
+        },
+        // {
+        //   element: this.imageInsertionButton,
+        //   command: 'image',
+        // },
+        // {
+        //   element: this.linkButton,
+        //   name: 'link',
+        // },
+      ],
+    };
+  }
+
   _getParentInnerMarkup() {
     return Markup.getMarkup('note', { id: this.id });
   }

@@ -91,6 +91,7 @@ const Tooltip = (function () {
       // set styling
       this.tooltip.classList.remove('is-visible');
       this.tooltip.style.zIndex = '-99999999';
+      this.tooltip.innerText = '';
     };
 
     _delayThenDisplay = event => {

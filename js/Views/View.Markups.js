@@ -108,8 +108,12 @@ const ViewMarkups = (function () {
         <span>Delete Note</span>
       </button>
     </div>
-    <textarea id="textarea-${id}" class="panel text-area" placeholder="Take a note..."></textarea>
-    <div class="panel tool-bar">
+    <div class="panel panel--text-content">
+      <div id="content-wrapper-${id}" class="content-wrapper">
+        <div id="contenteditable-${id}" contenteditable="true"b spellcheck="false"></div>
+    </div>
+    </div>
+    <div id="toolbar-${id}" class="panel toolbar is-visible">
       <div class="wrapper flex justify-space-between">
         <button id="bold-btn-${id}" class="button button--icon" data-hover="Bold">
           <svg class="icon icon--bold">
@@ -136,9 +140,14 @@ const ViewMarkups = (function () {
             <use href="icons/sprite.svg#bullet-list"></use>
           </svg>
         </button>
-        <button id="#image-insertion-btn-${id}" class="button button--icon" data-hover="Add Image">
+        <button id="image-insertion-btn-${id}" class="button button--icon" data-hover="Add Image">
           <svg class="icon icon--image">
             <use href="icons/sprite.svg#image"></use>
+          </svg>
+        </button>
+        <button id="create-link-btn-${id}" class="button button--icon" data-hover="Create Link">
+          <svg class="icon icon--link">
+            <use href="icons/sprite.svg#link"></use>
           </svg>
         </button>
       </div>

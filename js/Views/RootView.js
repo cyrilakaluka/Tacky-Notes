@@ -61,7 +61,7 @@ export default class RootView extends AbstractView {
     const TIMEOUT_TO_FOCUS = 500;
     this.root.append(view.parent);
     if (view.zIndex === this.settings.highestZIndex) {
-      setTimeout(() => view.textArea.focus(), TIMEOUT_TO_FOCUS);
+      setTimeout(() => view.textContent.focus(), TIMEOUT_TO_FOCUS);
     }
     view.display();
   }
