@@ -1,5 +1,5 @@
 # Tacky Notes
-This a web-based note taking app, designed to mimic (in terms of functions, looks and feel) Sticky Notes on MS Windows 10. This project is devloped entirely with html, css and vanilla JS.
+This a web-based note taking app, designed to mimic (in terms of functions, looks and feel) Sticky Notes on MS Windows 10. This project is devloped entirely with html, scss and vanilla JS.
 
 #### Demo
 This application is still in development, however, the current state can be viewed on github. Check it out at the following link: 
